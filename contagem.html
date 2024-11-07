@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contagem de Tempo</title>
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .container img {
+            width: 300px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #d35f5f;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        
+        .time-unit {
+            font-size: 24px;
+            color: #d35f5f;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src=img/bjin.jpeg alt="Nós" />
+        <h1>Lucas e Isa</h1>
+        <p class="description">Estamos juntos há:</p>
+        <div id="timeElapsed">
+            <p class="time-unit" id="years">0 anos</p>
+            <p class="time-unit" id="months">0 meses</p>
+            <p class="time-unit" id="days">0 dias</p>
+            <p class="time-unit" id="hours">0 horas</p>
+            <p class="time-unit" id="minutes">0 minutos</p>
+            <p class="time-unit" id="seconds">0 segundos</p>
+        </div>
+    </div>
+
+    <script>
+        
+        const startDate = new Date("2023-10-03T00:00:00");
+
+        
+        function updateElapsedTime() {
+            const now = new Date();
+            const elapsedTime = now - startDate;
+
+            
+            let years = now.getFullYear() - startDate.getFullYear();
+            let months = now.getMonth() - startDate.getMonth();
+            let days = now.getDate() - startDate.getDate();
+            let hours = now.getHours() - startDate.getHours();
+            let minutes = now.getMinutes() - startDate.getMinutes();
+            let seconds = now.getSeconds() - startDate.getSeconds();
+
+            
+            if (seconds < 0) {
+                seconds += 60;
+                minutes--;
+            }
+            if (minutes < 0) {
+                minutes += 60;
+                hours--;
+            }
+            if (hours < 0) {
+                hours += 24;
+                days--;
+            }
+            if (days < 0) {
+                
+                const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                days += lastMonth.getDate();
+                months--;
+            }
+            if (months < 0) {
+                months += 12;
+                years--;
+            }
+
+           
+            document.getElementById("years").innerText = `${years} anos`;
+            document.getElementById("months").innerText = `${months} meses`;
+            document.getElementById("days").innerText = `${days} dias`;
+            document.getElementById("hours").innerText = `${hours} horas`;
+            document.getElementById("minutes").innerText = `${minutes} minutos`;
+            document.getElementById("seconds").innerText = `${seconds} segundos`;
+        }
+
+        
+        setInterval(updateElapsedTime, 1000);
+    </script>
+</body>
+</html>
